@@ -1,0 +1,19 @@
+# some workspace related ignores
+.settings/*
+*.sublime-project
+*.sublime-workspace
+*.psd
+
+# this is webspace specific
+.htaccess
+.htpasswd
+Robots.txt
+google*.html
+rss.xml
+
+local.php
+index*.*
+!index.php
+
+# no compiled files
+*.sass-cache*
