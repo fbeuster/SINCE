@@ -29,9 +29,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Business Incomes und Expenses</title>
     <link rel="stylesheet" href="assets/css/styles.css">
-    <script type="text/javascript">
-      var app = {};
-    </script>
   </head>
   <body>
     <header>
@@ -53,5 +50,12 @@
     </div>
   </body>
   <script src="//d3js.org/d3.v3.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="assets/js/form.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      app.combo.init();
+    });
+  </script>
   <?php echo $view->getScripts(); ?>
 </html>

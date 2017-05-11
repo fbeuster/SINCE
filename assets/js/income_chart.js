@@ -1,4 +1,4 @@
-var app = {} || app;
+var app = app || {};
 
 app.income_chart = {
   color   : d3.scale.category20(),

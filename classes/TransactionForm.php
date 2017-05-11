@@ -61,7 +61,7 @@
     private function makeInputText($name, $value, $length, $placeholder) {
       $text = '';
       $text .= '<td>';
-      $text .= '<input type="text" name="'.$name.'" maxlength="'.$length.'" placeholder="'.$placeholder.'" value='.$value.'>';
+      $text .= '<input type="text" name="'.$name.'" maxlength="'.$length.'" placeholder="'.$placeholder.'" value="'.$value.'" class="combo">';
       $text .= '</td>';
 
       return $text;
