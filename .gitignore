@@ -17,3 +17,5 @@ index*.*
 
 # no compiled files
 *.sass-cache*
+*.css
+*.css.map
