@@ -7,31 +7,36 @@ app.combo = {
     $('input.combo').parent().addClass('combo');
   },
 
-  attachDropdown : function($input, $list) {
-    $input.after($list);
+  attachDropdown : function($input, search_term) {
+    $.post({
+      url: 'api.php',
+      data: {
+        'action' : 'autocomplete',
+        'field' : $input[0].name,
+        'search_term' : search_term
+      },
+      success: function(data) {
+        if (data != '') {
+          var suggestions = JSON.parse(data);
+          var $ul         = $('<ul></ul>')
+                              .addClass('suggestions');
+
+          for (var i = 0; i < suggestions.length; i++) {
+            var $li = $('<li></li>')
+                        .attr('title', suggestions[i])
+                        .text(suggestions[i])
+                        .appendTo($ul);
+            $li.on('mousedown', app.combo.itemClickListener);
+          }
+
+          $input.after($ul);
+        }
+      }
+    });
   },
 
   detachDropdown : function($input) {
     $input.next('.suggestions').remove();
-  },
-
-  getValuesList : function(search_term) {
-    // todo here
-    // - make api request with limited result number (5)
-
-    var item_value  = search_term + search_term;
-
-    var $li         = $('<li></li>')
-                        .attr('title', item_value)
-                        .text(item_value);
-
-    var $ul         = $('<ul></ul>')
-                        .addClass('suggestions')
-                        .append($li);
-
-    $li.on('mousedown', app.combo.itemClickListener);
-
-    return $ul;
   },
 
   inputChangeListener : function() {
@@ -39,10 +44,8 @@ app.combo = {
 
     app.combo.detachDropdown($(this));
 
-    if (search_term != '') {
-      var $list = app.combo.getValuesList(search_term);
-
-      app.combo.attachDropdown($(this), $list);
+    if (search_term != '' && $(this).is(':focus')) {
+      app.combo.attachDropdown($(this), search_term);
     }
   },
 
