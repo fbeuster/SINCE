@@ -21,17 +21,20 @@
     private function loadData() {
       $con = Database::getDB()->getCon();
       $sql = 'SELECT
-                `customer`,
+                `customers`.`name`,
                 ROUND(SUM(`brutto`), 2) AS `brutto_sum`
               FROM
                 `transactions`
               JOIN
                 `categories`
                 ON `categories`.`id` = `transactions`.`category_id`
+              JOIN
+                `customers`
+                ON `customers`.`id` = `transactions`.`customers_id`
               WHERE
                 `is_income` = 1
               GROUP BY
-                `customer`
+                `customers`.`name`
               ORDER BY
                 `brutto_sum` DESC';
 

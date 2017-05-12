@@ -3,20 +3,29 @@
   if (isset($_POST['search_term'], $_POST['field'])) {
     $db = Database::getDB();
 
-    $fields   = array($_POST['field']);
-    $conds    = array($_POST['field'].' LIKE ?', 's',
+    if ($_POST['field'] == 'customer') {
+      $field  = 'name';
+      $table  = 'customers';
+
+    } else {
+      $field  = $_POST['field'];
+      $table  = 'transactions';
+    }
+
+    $fields   = array($field);
+    $conds    = array($field.' LIKE ?', 's',
                       array('%'.$_POST['search_term'].'%'));
-    $options  = 'GROUP BY '.$_POST['field'].
-                ' ORDER BY '.$_POST['field'].' ASC';
+    $options  = 'GROUP BY '.$field.
+                ' ORDER BY '.$field.' ASC';
     $limit    = array('LIMIT ?', 'i', array(5));
-    $res      = $db->select('transactions', $fields, $conds,
-                                            $options, $limit);
+    $res      = $db->select($table, $fields, $conds,
+                                    $options, $limit);
 
     if (count($res) > 0) {
       $customers = array();
 
       foreach ($res as $row) {
-        $customers[] = $row[$_POST['field']];
+        $customers[] = $row[$field];
       }
 
       echo json_encode($customers);

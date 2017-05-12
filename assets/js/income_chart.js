@@ -2,7 +2,7 @@ var app = app || {};
 
 app.income_chart = {
   arc     : null,
-  color   : d3.scale.category20(),
+  color   : d3.scale.category10(),
   data    : null,
   height  : 320,
   margin  : 16,

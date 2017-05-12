@@ -18,13 +18,14 @@
 
     private function loadData() {
       $db       = Database::getDB();
-      $fields   = array('transactions.date', 'transactions.customer',
+      $fields   = array('transactions.date', 'customers.name AS cname',
                         'transactions.description', 'transactions.netto',
                         'transactions.tax_7', 'transactions.tax_19',
                         'transactions.brutto',
                         'categories.name');
       $options  = 'ORDER BY date ASC';
-      $join     = 'JOIN categories ON categories.id = transactions.category_id';
+      $join     = 'JOIN categories ON categories.id = transactions.category_id '.
+                  'JOIN customers ON customers.id = transactions.customers_id';
       $res      = $db->select('transactions', $fields,
                               null, $options, null, $join);
 
@@ -33,7 +34,7 @@
           $this->transactions[] = array(
             'brutto'      => $row['brutto'],
             'category'    => $row['name'],
-            'customer'    => $row['customer'],
+            'customer'    => $row['cname'],
             'date'        => $row['date'],
             'description' => $row['description'],
             'netto'       => $row['netto'],
