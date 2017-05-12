@@ -19,7 +19,7 @@
         $res    = $db->select('customers', $fields, $conds);
 
         if (count($res) > 0) {
-          $id = $res[0];
+          $id = $res[0]['id'];
 
         } else {
           # no? then create new customer
