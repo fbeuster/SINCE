@@ -17,6 +17,9 @@
     }
 
     private function loadData() {
+      # loading form before data to handle submits
+      $this->form = new TransactionForm();
+
       $db       = Database::getDB();
       $fields   = array('transactions.date', 'customers.name AS cname',
                         'transactions.description', 'transactions.netto',
@@ -43,8 +46,6 @@
           );
         }
       }
-
-      $this->form = new TransactionForm();
     }
 
     public function show() {
