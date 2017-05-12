@@ -1,6 +1,6 @@
 
-
 @import 'lib/_color';
+@import 'form';
 
 * {
   margin: 0;
@@ -78,179 +78,79 @@ body {
     margin-bottom: 0.889em;
   }
 
-  table {
+  table.value_list {
+    border-collapse: collapse;
+
     thead {
       tr {
         td {
+          border-bottom: 1px solid $darker_grey;
           font-weight: bold;
+          margin: 0;
+          padding: 0.25em;
         }
       }
     }
 
-    td.submit {
-      padding-top: 1em;
-      text-align: right;
+    tbody,
+    tfoot {
+      tr {
+        td {
+          margin: 0;
+          padding: 0.25em;
+          vertical-align: top;
+
+          &:not(:last-child) {
+            padding-right: 1em;
+          }
+
+          &.negative {
+            color: $red;
+          }
+
+          &.number {
+            text-align: right;
+            width: 5em;
+          }
+        }
+      }
     }
 
-    &.value_list {
-      border-collapse: collapse;
+    tbody {
+      tr {
 
-      thead {
-        tr {
+        &:nth-child(2n) {
           td {
-            border-bottom: 1px solid $darker_grey;
-            margin: 0;
-            padding: 0.25em;
-          }
-        }
-      }
-
-      tbody,
-      tfoot {
-        tr {
-          td {
-            margin: 0;
-            padding: 0.25em;
-            vertical-align: top;
-
-            &:not(:last-child) {
-              padding-right: 1em;
-            }
-
-            &.negative {
-              color: $red;
-            }
-
-            &.number {
-              text-align: right;
-              width: 5em;
-            }
-          }
-        }
-      }
-
-      tbody {
-        tr {
-
-          &:nth-child(2n) {
-            td {
-              background: $grey;
-            }
-          }
-
-          &:not(.income) {
-            td {
-              border-top: 1px dotted $darker_grey;
-            }
-          }
-
-          &:not(.income) ~ tr:not(.income) {
-            td {
-              border-top: 0;
-            }
-          }
-
-          td {
-            background: $light_grey;
-
-            &.date {
-              width: 5em;
-            }
-          }
-        }
-      }
-
-      tfoot {
-        tr {
-          td {
-            border-top: 1px solid $darker_grey;
-          }
-        }
-      }
-    }
-  }
-
-  fieldset {
-    border: 0;
-    margin-top: 2.5em;
-
-    legend {
-      border-bottom: 1px solid $green;
-      font-size: 1.25em;
-      font-weight: bold;
-      margin: 0 0 1em 0;
-      padding: 0 2em;
-    }
-
-    input,
-    select {
-      background: $white;
-      border: 1px solid $darker_grey;
-      box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      font-size: 1em;
-      height: 1.75em;
-      line-height: 1.75em;
-      padding: 0 0.25em;
-
-      &:hover {
-        background: $grey;
-      }
-    }
-
-    input[type=date] {
-      width: 10em;
-    }
-
-    input[type=number] {
-      width: 5.5em;
-    }
-
-    input[type=submit] {
-      background: $green;
-      border: 0.0625em solid $green;
-      color: $cold_grey;
-      float: right;
-      font-size: 1.25em;
-      height: 1.875em;
-      padding: 0 0.5em;
-
-      &:hover {
-        background: $cold_grey;
-        color: $green;
-        cursor: pointer;
-      }
-    }
-
-    td.combo {
-      position: relative;
-
-      ul {
-        color: $darker_grey;
-        left: 0;
-        overflow: hidden;
-        position: absolute;
-        top: 1.75em;
-        min-width: 100%;
-        list-style: none;
-
-        li {
-          background: $white;
-          border: 1px solid $darker_grey;
-          border-bottom-color: $dark_grey;
-          border-top: 0;
-          cursor: pointer;
-          padding: 0 0.25em;
-
-          &:hover {
             background: $grey;
-            color: $cold_black;
           }
+        }
 
-          &:last-child {
-            border-bottom-color: $darker_grey;
+        &:not(.income) {
+          td {
+            border-top: 1px dotted $darker_grey;
           }
+        }
+
+        &:not(.income) ~ tr:not(.income) {
+          td {
+            border-top: 0;
+          }
+        }
+
+        td {
+          background: $light_grey;
+
+          &.date {
+            width: 5em;
+          }
+        }
+      }
+    }
+
+    tfoot {
+      tr {
+        td {
+          border-top: 1px solid $darker_grey;
         }
       }
     }

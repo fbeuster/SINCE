@@ -18,8 +18,6 @@
     case 'summary': $view = new SummaryView(); break;
     default:        $view = new HistoryView(); break;
   }
-
-  $form = new TransactionForm();
 ?>
 
 <!DOCTYPE html>
@@ -43,8 +41,6 @@
       </div>
     </header>
     <div class="wrapper">
-      <?php $form->show(); ?>
-
       <h2><?php echo $view->getTitle(); ?></h2>
       <?php $view->show(); ?>
     </div>

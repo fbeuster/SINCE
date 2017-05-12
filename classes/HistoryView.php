@@ -1,6 +1,7 @@
 <?php
 
   class HistoryView implements IView {
+    private $form;
     private $transactions = array();
 
     public function __construct() {
@@ -41,6 +42,8 @@
           );
         }
       }
+
+      $this->form = new TransactionForm();
     }
 
     public function show() {
@@ -97,6 +100,8 @@
 
       echo '</tbody>';
       echo '</table>';
+
+      $this->form->show();
     }
   }
 

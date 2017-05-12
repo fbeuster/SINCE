@@ -40,38 +40,42 @@
       }
     }
 
-    private function makeInputDate($name, $value) {
+    private function makeInputDate($name, $value, $label) {
       $date = '';
-      $date .= '<td>';
+      $date .= '<label>';
+      $date .= '<span>'.$label.'</span>';
       $date .= '<input type="date" name="'.$name.'" placeholder="YYYY-MM-DD" value="'.$value.'">';
-      $date .= '</td>';
+      $date .= '</label>';
 
       return $date;
     }
 
-    private function makeInputNumber($name, $value) {
+    private function makeInputNumber($name, $value, $label) {
       $number = '';
-      $number .= '<td>';
+      $number .= '<label class="number">';
+      $number .= '<span>'.$label.'</span>';
       $number .= '<input type="number" step="0.01" value="'.$value.'" name="'.$name.'">';
-      $number .= '</td>';
+      $number .= '</label>';
 
       return $number;
     }
 
-    private function makeInputText($name, $value, $length, $placeholder) {
+    private function makeInputText($name, $value, $length, $placeholder, $label) {
       $text = '';
-      $text .= '<td>';
+      $text .= '<label>';
+      $text .= '<span>'.$label.'</span>';
       $text .= '<input type="text" name="'.$name.'" maxlength="'.$length.'" placeholder="'.$placeholder.'" value="'.$value.'" class="combo" autocomplete="off">';
-      $text .= '</td>';
+      $text .= '</label>';
 
       return $text;
     }
 
-    private function makeSelect($name, $value, $options) {
+    private function makeSelect($name, $value, $options, $label) {
       $options = array('-1' => 'Select category...') + $options;
 
       $select = '';
-      $select .= '<td>';
+      $select .= '<label>';
+      $select .= '<span>'.$label.'</span>';
       $select .= '<select name="'.$name.'">';
 
       foreach ($options as $key => $label) {
@@ -87,7 +91,7 @@
       }
 
       $select .= '</select>';
-      $select .= '</td>';
+      $select .= '</label>';
 
       return $select;
     }
@@ -97,41 +101,19 @@
       echo '<fieldset>';
       echo '<legend>Add Transaction</legend>';
 
-      echo '<table>';
-      echo '<thead>';
-      echo '<tr>';
-      echo '<td>Date</td>';
-      echo '<td>Customer</td>';
-      echo '<td>Description</td>';
-      echo '<td>Netto</td>';
-      echo '<td>7%</td>';
-      echo '<td>19%</td>';
-      echo '<td>Brutto</td>';
-      echo '<td>Category</td>';
-      echo '</tr>';
-      echo '</thead>';
-
-      echo '<tbody>';
-      echo '<tr>';
-      echo $this->makeInputDate('date', '');
+      echo $this->makeInputDate('date', '', 'Date');
       echo $this->makeInputText('customer', '', 64,
-                                'Customer name');
+                                'Customer name',
+                                'Customer');
       echo $this->makeInputText('description', '', 128,
-                                'Description text');
-      echo $this->makeInputNumber('netto', 0);
-      echo $this->makeInputNumber('tax_7', 0);
-      echo $this->makeInputNumber('tax_19', 0);
-      echo $this->makeInputNumber('brutto', 0);
-      echo $this->makeSelect('category', '', $this->categories);
-      echo '</tr>';
-      echo '<tr>';
-      echo '<td colspan="7"></td>';
-      echo '<td class="submit">';
-      echo '<input type="submit" value="Insert" name="add_transaction">';
-      echo '</td>';
-      echo '</tr>';
-      echo '</tbody>';
-      echo '</table>';
+                                'Description text',
+                                'Description');
+      echo $this->makeSelect('category', '', $this->categories, 'Category');
+      echo $this->makeInputNumber('netto', 0, 'Netto');
+      echo $this->makeInputNumber('tax_7', 0, '7% Tax');
+      echo $this->makeInputNumber('tax_19', 0, '19% Tax');
+      echo $this->makeInputNumber('brutto', 0, 'Brutto');
+      echo '<input type="submit" value="Insert transaction" name="add_transaction">';
       echo '</fieldset>';
       echo '</form>';
     }

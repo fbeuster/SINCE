@@ -1,0 +1,111 @@
+@import 'lib/_color';
+
+body {
+  fieldset {
+    border: 0;
+    margin-top: 2.5em;
+
+    legend {
+      border-bottom: 1px solid $green;
+      font-size: 1.25em;
+      font-weight: bold;
+      margin: 0 0 1em 0;
+      padding: 0 2em;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 1em;
+
+      &.combo {
+        position: relative;
+
+        ul {
+          color: $darker_grey;
+          left: 0;
+          overflow: hidden;
+          position: absolute;
+          top: 1.75em;
+          min-width: 100%;
+          list-style: none;
+
+          li {
+            background: $white;
+            border: 1px solid $darker_grey;
+            border-bottom-color: $dark_grey;
+            border-top: 0;
+            cursor: pointer;
+            padding: 0 0.25em;
+
+            &:hover {
+              background: $grey;
+              color: $cold_black;
+            }
+
+            &:last-child {
+              border-bottom-color: $darker_grey;
+            }
+          }
+        }
+      }
+
+      &.number {
+        display: inline-block;
+        margin-right: 2em;
+
+        span {
+          display: block;
+          width: 6em;
+        }
+
+        input {
+          width: 6em;
+        }
+      }
+
+      span {
+        display: inline-block;
+        font-weight: bold;
+        width: 8em;
+      }
+
+      input,
+      select {
+        background: $white;
+        border: 1px solid $darker_grey;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        font-size: 1em;
+        height: 1.75em;
+        line-height: 1.75em;
+        padding: 0 0.25em;
+        width: 14em;
+
+        &:hover {
+          background: $grey;
+        }
+      }
+
+      input[type=number] {
+        padding-right: 0;
+      }
+    }
+
+    input[type=submit] {
+      background: $green;
+      border: 0.0625em solid $green;
+      color: $cold_grey;
+      display: block;
+      font-size: 1.25em;
+      height: 1.875em;
+      padding: 0 0.5em;
+
+      &:hover {
+        background: $cold_grey;
+        color: $green;
+        cursor: pointer;
+      }
+    }
+  }
+}
