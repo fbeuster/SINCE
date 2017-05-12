@@ -174,10 +174,10 @@ body {
 
       td {
         &:not(:first-child) {
-          padding-left: 1em;
+          padding-left: 1.5em;
         }
 
-        &:last-child {
+        &.number {
           text-align: right;
         }
 

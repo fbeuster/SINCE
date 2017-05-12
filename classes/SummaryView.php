@@ -3,7 +3,7 @@
   class SummaryView implements IView {
     private $quarter_turnovers;
     private $quarters;
-    private $scripts;
+    private $scripts = '';
     private $turnover;
     private $year;
 
@@ -12,6 +12,8 @@
     }
 
     public function getScripts() {
+      $this->scripts .= $this->income_chart->getJavaScripts();
+      $this->scripts .= $this->expense_chart->getJavaScripts();
       return $this->scripts;
     }
 
@@ -160,11 +162,8 @@
         }
       }
 
-      $income_chart = new IncomeChart();
-      $this->scripts .= $income_chart->getJavaScripts();
-
-      $expense_chart = new ExpenseChart();
-      $this->scripts .= $expense_chart->getJavaScripts();
+      $this->income_chart   = new IncomeChart();
+      $this->expense_chart  = new ExpenseChart();
     }
 
     private function printValueTable($types, $turnover) {
@@ -232,15 +231,8 @@
         $this->printValueTable($types, $this->quarter_turnovers[$number]);
       }
 
-      echo '<h3 class="distribution_chart">Income Distribution</h3>';
-      echo '<p>The following chart illustrates the distribution of the income for given year across the different income sources.';
-      echo '<div id="income_chart" class="distribution_chart">';
-      echo '</div>';
-
-      echo '<h3 class="distribution_chart">Expense Distribution</h3>';
-      echo '<p>The following chart illustrates the distribution of the expenses for given year across the different vendors.';
-      echo '<div id="expense_chart" class="distribution_chart">';
-      echo '</div>';
+      $this->income_chart->show();
+      $this->expense_chart->show();
     }
   }
 

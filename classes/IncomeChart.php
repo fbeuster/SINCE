@@ -2,6 +2,7 @@
 
   class IncomeChart {
     private $incomes = array();
+    private $total = 0;
 
     function __construct() {
       $this->loadData();
@@ -45,6 +46,7 @@
       $stmt->bind_result($customer, $color, $brutto);
 
       while ($stmt->fetch()) {
+        $this->total += $brutto;
         $this->incomes[] = array(
           'c' => $customer,
           'color' => ($color && preg_match('/#[a-f0-9]{6}/', $color)) ? $color : '',
@@ -52,6 +54,13 @@
         );
       }
       $stmt->close();
+    }
+
+    public function show() {
+      echo '<h3 class="distribution_chart">Income Distribution</h3>';
+      echo '<p>The following chart illustrates the distribution of the income for given year across the different income sources.';
+      echo '<div id="income_chart" class="distribution_chart" data-sum="'.$this->total.'">';
+      echo '</div>';
     }
   }
 ?>

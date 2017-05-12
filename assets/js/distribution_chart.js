@@ -65,6 +65,7 @@ app.distribution_chart = {
   },
 
   drawLegend : function() {
+    var chart   = this.chart;
     var legend  = d3.select(this.chart)
                     .append("table");
 
@@ -89,7 +90,16 @@ app.distribution_chart = {
         .text(function(d){ return d.c;});
 
     tr.append("td")
+        .attr('class', 'number')
         .text(function(d){ return d.amount.toFixed(2) + ' €';});
+
+    tr.append("td")
+        .attr('class', 'number')
+        .text(function(d){
+          var total       = $(chart).attr('data-sum');
+          var percentage  = d.amount * 100 / total;
+          return percentage.toFixed(2) + ' %';
+        });
   },
 
   fill : function(d, i) {
