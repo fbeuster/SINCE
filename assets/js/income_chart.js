@@ -89,7 +89,7 @@ app.distribution_chart = {
         .text(function(d){ return d.c;});
 
     tr.append("td")
-        .text(function(d){ return d.amount + ' €';});
+        .text(function(d){ return d.amount.toFixed(2) + ' €';});
   },
 
   fill : function(d, i) {
