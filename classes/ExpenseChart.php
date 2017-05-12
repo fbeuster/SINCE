@@ -10,7 +10,7 @@
     public function getJavaScripts() {
       $scripts = '';
 
-      $scripts .= '<script type="text/javascript" src="assets/js/income_chart.js"></script>';
+      $scripts .= '<script type="text/javascript" src="assets/js/distribution_chart.js"></script>';
       $scripts .= '<script type="text/javascript">';
       $scripts .= 'var expense_chart = $.extend(true, {}, app.distribution_chart);';
       $scripts .= "expense_chart.draw('#expense_chart', JSON.parse('".json_encode($this->expenses)."'));";
