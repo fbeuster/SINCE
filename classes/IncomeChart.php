@@ -22,6 +22,7 @@
       $con = Database::getDB()->getCon();
       $sql = 'SELECT
                 `customers`.`name`,
+                `customers`.`color`,
                 ROUND(SUM(`brutto`), 2) AS `brutto_sum`
               FROM
                 `transactions`
@@ -40,11 +41,12 @@
 
       $stmt   = $con->prepare($sql);
       $stmt->execute();
-      $stmt->bind_result($customer, $brutto);
+      $stmt->bind_result($customer, $color, $brutto);
 
       while ($stmt->fetch()) {
         $this->incomes[] = array(
           'c' => $customer,
+          'color' => ($color && preg_match('/#[a-f0-9]{6}/', $color)) ? $color : '',
           'amount' => $brutto
         );
       }
