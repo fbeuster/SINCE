@@ -12,11 +12,30 @@
     private function handlePost() {
       if (isset($_POST, $_POST['add_transaction'])) {
         $db     = Database::getDB();
-        $fields = array('date', 'customer', 'description', 'category_id',
+
+        # is existing customer?
+        $fields = array('id');
+        $conds  = array('name = ?', 's', array($_POST['customer']));
+        $res    = $db->select('customers', $fields, $conds);
+
+        if (count($res) > 0) {
+          $id = $res[0];
+
+        } else {
+          # no? then create new customer
+          $fields = array('name', 'color');
+          $values = array('ss', array($_POST['customer'],
+                                      $_POST['color']));
+          $id     = $db->insert('customers', $fields, $values);
+        }
+
+        # insert transaction
+        $fields = array('date', 'description',
+                        'category_id', 'customers_id',
                         'netto', 'tax_7', 'tax_19', 'brutto');
-        $values = array('sssidddd',
-                        array($_POST['date'], $_POST['customer'],
-                              $_POST['description'], $_POST['category'],
+        $values = array('ssiidddd',
+                        array($_POST['date'], $_POST['description'],
+                              $_POST['category'], $id,
                               $_POST['netto'], $_POST['tax_7'],
                               $_POST['tax_19'], $_POST['brutto']
         ));
@@ -60,11 +79,15 @@
       return $number;
     }
 
-    private function makeInputText($name, $value, $length, $placeholder, $label) {
+    private function makeInputText($name, $value, $length, $placeholder, $label, $combo = true) {
       $text = '';
       $text .= '<label>';
       $text .= '<span>'.$label.'</span>';
-      $text .= '<input type="text" name="'.$name.'" maxlength="'.$length.'" placeholder="'.$placeholder.'" value="'.$value.'" class="combo" autocomplete="off">';
+      $text .= '<input type="text" name="'.$name.'" maxlength="'.$length.'" placeholder="'.$placeholder.'" value="'.$value.'" autocomplete="off"';
+      if ($combo) {
+        $text .= 'class="combo"';
+      }
+      $text .= '>';
       $text .= '</label>';
 
       return $text;
@@ -102,9 +125,12 @@
       echo '<legend>Add Transaction</legend>';
 
       echo $this->makeInputDate('date', '', 'Date');
-      echo $this->makeInputText('customer', '', 64,
+      echo $this->makeInputText('customer', '', 128,
                                 'Customer name',
                                 'Customer');
+      echo $this->makeInputText('color', '', 7,
+                                'Customer color',
+                                'Color', false);
       echo $this->makeInputText('description', '', 128,
                                 'Description text',
                                 'Description');
