@@ -22,12 +22,12 @@ body {
 
         ul {
           color: $darker_grey;
-          left: 0;
-          overflow: hidden;
+          left: 8em;
+          list-style: none;
+          max-width: 22em;
           position: absolute;
           top: 1.75em;
-          min-width: 100%;
-          list-style: none;
+          z-index: 1;
 
           li {
             background: $white;
@@ -40,6 +40,11 @@ body {
             &:hover {
               background: $grey;
               color: $cold_black;
+            }
+
+            &:first-child {
+              border-top: 1px solid $darker_grey;
+              margin-top: -1px
             }
 
             &:last-child {
@@ -80,7 +85,7 @@ body {
         height: 1.75em;
         line-height: 1.75em;
         padding: 0 0.25em;
-        width: 14em;
+        width: 22em;
 
         &:hover {
           background: $grey;

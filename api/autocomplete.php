@@ -8,7 +8,7 @@
                       array('%'.$_POST['search_term'].'%'));
     $options  = 'GROUP BY '.$_POST['field'].
                 ' ORDER BY '.$_POST['field'].' ASC';
-    $limit    = array('LIMIT ?', 'i', array(2));
+    $limit    = array('LIMIT ?', 'i', array(5));
     $res      = $db->select('transactions', $fields, $conds,
                                             $options, $limit);
 

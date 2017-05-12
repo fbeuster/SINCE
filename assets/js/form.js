@@ -55,7 +55,7 @@ app.combo = {
 
   itemClickListener : function(event) {
     event.preventDefault();
-    var $input = $(this).closest('td.combo').children('input.combo');
+    var $input = $(this).closest('label.combo').children('input.combo');
     $input.val($(this).text());
 
     $input.blur();
