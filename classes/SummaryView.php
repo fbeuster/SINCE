@@ -162,6 +162,9 @@
 
       $income_chart = new IncomeChart();
       $this->scripts .= $income_chart->getJavaScripts();
+
+      $expense_chart = new ExpenseChart();
+      $this->scripts .= $expense_chart->getJavaScripts();
     }
 
     private function printValueTable($types, $turnover) {
@@ -229,9 +232,14 @@
         $this->printValueTable($types, $this->quarter_turnovers[$number]);
       }
 
-      echo '<h3 class="income_chart">Income Distribution</h3>';
+      echo '<h3 class="distribution_chart">Income Distribution</h3>';
       echo '<p>The following chart illustrates the distribution of the income for given year across the different income sources.';
-      echo '<div id="income_chart">';
+      echo '<div id="income_chart" class="distribution_chart">';
+      echo '</div>';
+
+      echo '<h3 class="distribution_chart">Expense Distribution</h3>';
+      echo '<p>The following chart illustrates the distribution of the expenses for given year across the different vendors.';
+      echo '<div id="expense_chart" class="distribution_chart">';
       echo '</div>';
     }
   }

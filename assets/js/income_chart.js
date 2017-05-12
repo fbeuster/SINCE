@@ -1,19 +1,14 @@
 var app = app || {};
 
-app.income_chart = {
+app.distribution_chart = {
   arc     : null,
+  chart   : '',
   color   : d3.scale.category20(),
   data    : null,
   height  : 320,
   margin  : 16,
   width   : 320,
   radius  : 0,
-
-  animate : function(b) {
-    b.innerRadius = 0;
-    var i = d3.interpolate({startAngle: 0, endAngle: 0}, b);
-    return function(t) { return app.income_chart.arc(i(t)); };
-  },
 
   dataAmount : function(d) {
     return d.amount;
@@ -23,7 +18,8 @@ app.income_chart = {
     return d.data.c;
   },
 
-  draw : function(income_data) {
+  draw : function(chart, income_data) {
+    this.chart  = chart;
     this.data   = income_data.slice();
     this.radius = Math.min(this.width, this.height) / 2;
     this.arc    = d3.svg.arc().outerRadius(this.radius);
@@ -33,11 +29,12 @@ app.income_chart = {
   },
 
   drawChart : function() {
+    var that = this;
     var pie = d3.layout.pie()
                 .value(this.dataAmount)
                 .sort(null);
 
-    var svg = d3.select("#income_chart")
+    var svg = d3.select(this.chart)
                 .append("svg")
                   .attr("width", this.width)
                   .attr("height", this.height)
@@ -52,17 +49,23 @@ app.income_chart = {
                     .attr("fill", this.fill)
                     .transition()
                     .duration(2000)
-                    .attrTween('d', this.animate);
+                    .attrTween('d', animate);
 
     path.each(function(d, i) {
       d3.select(this)
         .append('title')
-          .text(app.income_chart.dataTitle);
+          .text(that.dataTitle);
     });
+
+    function animate(b) {
+      b.innerRadius = 0;
+      var i = d3.interpolate({startAngle: 0, endAngle: 0}, b);
+      return function(t) { return that.arc(i(t)); };
+    }
   },
 
   drawLegend : function() {
-    var legend  = d3.select('#income_chart')
+    var legend  = d3.select(this.chart)
                     .append("table");
 
     var tr      = legend.append("tbody")
@@ -98,6 +101,6 @@ app.income_chart = {
       return d.color;
     }
 
-    return app.income_chart.color(i);
+    return app.distribution_chart.color(i);
   }
 }

@@ -1,7 +1,7 @@
 <?php
 
-  class IncomeChart {
-    private $incomes = array();
+  class ExpenseChart {
+    private $expenses = array();
 
     function __construct() {
       $this->loadData();
@@ -12,8 +12,8 @@
 
       $scripts .= '<script type="text/javascript" src="assets/js/income_chart.js"></script>';
       $scripts .= '<script type="text/javascript">';
-      $scripts .= 'var income_chart = $.extend(true, {}, app.distribution_chart);';
-      $scripts .= "income_chart.draw('#income_chart', JSON.parse('".json_encode($this->incomes)."'));";
+      $scripts .= 'var expense_chart = $.extend(true, {}, app.distribution_chart);';
+      $scripts .= "expense_chart.draw('#expense_chart', JSON.parse('".json_encode($this->expenses)."'));";
       $scripts .= '</script>';
 
       return $scripts;
@@ -34,7 +34,7 @@
                 `customers`
                 ON `customers`.`id` = `transactions`.`customers_id`
               WHERE
-                `is_income` = 1
+                `is_income` = 0
               GROUP BY
                 `customers`.`name`
               ORDER BY
@@ -45,7 +45,7 @@
       $stmt->bind_result($customer, $color, $brutto);
 
       while ($stmt->fetch()) {
-        $this->incomes[] = array(
+        $this->expenses[] = array(
           'c' => $customer,
           'color' => ($color && preg_match('/#[a-f0-9]{6}/', $color)) ? $color : '',
           'amount' => $brutto
