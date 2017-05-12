@@ -92,6 +92,10 @@ body {
         }
       }
 
+      input[type=color] {
+        padding: 0;
+      }
+
       input[type=number] {
         padding-right: 0;
       }

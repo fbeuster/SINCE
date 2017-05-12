@@ -59,6 +59,16 @@
       }
     }
 
+    private function makeInputColor($name, $value, $length, $placeholder, $label) {
+      $text = '';
+      $text .= '<label>';
+      $text .= '<span>'.$label.'</span>';
+      $text .= '<input type="color" name="'.$name.'" maxlength="'.$length.'" placeholder="'.$placeholder.'" title="Click to select a color" value="'.$value.'">';
+      $text .= '</label>';
+
+      return $text;
+    }
+
     private function makeInputDate($name, $value, $label) {
       $date = '';
       $date .= '<label>';
@@ -79,15 +89,11 @@
       return $number;
     }
 
-    private function makeInputText($name, $value, $length, $placeholder, $label, $combo = true) {
+    private function makeInputText($name, $value, $length, $placeholder, $label) {
       $text = '';
       $text .= '<label>';
       $text .= '<span>'.$label.'</span>';
-      $text .= '<input type="text" name="'.$name.'" maxlength="'.$length.'" placeholder="'.$placeholder.'" value="'.$value.'" autocomplete="off"';
-      if ($combo) {
-        $text .= 'class="combo"';
-      }
-      $text .= '>';
+      $text .= '<input type="text" name="'.$name.'" maxlength="'.$length.'" placeholder="'.$placeholder.'" value="'.$value.'" autocomplete="off" class="combo">';
       $text .= '</label>';
 
       return $text;
@@ -128,9 +134,9 @@
       echo $this->makeInputText('customer', '', 128,
                                 'Customer name',
                                 'Customer');
-      echo $this->makeInputText('color', '', 7,
+      echo $this->makeInputColor('color', '#ffffff', 7,
                                 'Customer color',
-                                'Color', false);
+                                'Color');
       echo $this->makeInputText('description', '', 128,
                                 'Description text',
                                 'Description');
