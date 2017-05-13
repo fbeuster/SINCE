@@ -22,7 +22,8 @@
       $this->form = new TransactionForm();
 
       $db       = Database::getDB();
-      $fields   = array('transactions.date', 'customers.name AS cname',
+      $fields   = array('transactions.id',
+                        'transactions.date', 'customers.name AS cname',
                         'transactions.description', 'transactions.netto',
                         'transactions.tax_7', 'transactions.tax_19',
                         'transactions.brutto',
@@ -41,6 +42,7 @@
             'customer'    => $row['cname'],
             'date'        => $row['date'],
             'description' => $row['description'],
+            'id'          => $row['id'],
             'netto'       => $row['netto'],
             'tax_7'       => $row['tax_7'],
             'tax_19'      => $row['tax_19']
@@ -78,7 +80,7 @@
 
       } else {
         foreach ($this->transactions as $transaction) {
-          echo '<tr>';
+          echo '<tr data-transaction-id="'.$transaction['id'].'">';
           echo '<td class="date">';
           echo date('d.m.Y', strtotime($transaction['date']));
           echo '</td>';
