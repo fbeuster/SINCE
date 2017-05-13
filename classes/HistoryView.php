@@ -60,6 +60,7 @@
       echo '<td class="number">19%</td>';
       echo '<td class="number">Brutto</td>';
       echo '<td class="text">Category</td>';
+      echo '<td class="actions"></td>';
       echo '</tr>';
       echo '</thead>';
       echo '<tbody>';
@@ -95,6 +96,12 @@
           echo '</td>';
           echo '<td class="text">';
           echo $transaction['category'];
+          echo '</td>';
+          echo '<td class="actions">';
+          echo '<span class="button mode_edit material-icons" title="Edit transaction">mode_edit</span>';
+          echo '<span class="button delete material-icons" title="Delete transaction">delete</span>';
+          echo '<span class="button done material-icons" title="Save changes">done</span>';
+          echo '<span class="button cancel material-icons" title="Cancel">cancel</span>';
           echo '</td>';
           echo '</tr>';
         }
