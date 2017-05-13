@@ -44,6 +44,16 @@
       <h2><?php echo $view->getTitle(); ?></h2>
       <?php $view->show(); ?>
     </div>
+    <div class="overlay">
+      <div class="dialog">
+        <div class="title">Dialog title</div>
+        <div class="text">Dialog text message</div>
+        <div class="controls">
+          <span class="confirm">Confirm</span>
+          <span class="cancel">Cancel</span>
+        </div>
+      </div>
+    </div>
   </body>
   <script src="//d3js.org/d3.v3.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>

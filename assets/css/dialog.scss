@@ -1,0 +1,79 @@
+
+body {
+
+  &.has_dialog {
+    overflow: hidden;
+
+    .overlay {
+      display: flex;
+    }
+  }
+
+  .overlay {
+    background: rgba(1,1,1,0.5);
+    display: none;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+
+    .dialog {
+      align-self: center;
+      background: $cold_grey;
+      margin: 0 auto;
+      overflow: hidden;
+      width: 20em;
+
+      .title {
+        background: $red;
+        color: $white;
+        font-weight: bold;
+        padding: 0.25em 1em;
+      }
+
+      .text {
+        margin: 1em;
+      }
+
+      .controls {
+        display: flex;
+        margin: 1em;
+
+        span {
+          cursor: pointer;
+          display: block;
+          font-weight: bold;
+          padding: 0.125em 0.875em;
+          text-align: center;
+          width: 8em;
+
+          &:first-child {
+            margin-right: 1em;
+          }
+
+          &.confirm {
+            background: $red;
+            border: 0.125em solid $red;
+            color: $white;
+
+            &:hover {
+              background: $cold_grey;
+              color: $red;
+            }
+          }
+
+          &.cancel {
+            background: $dark_grey;
+            border: 0.125em solid $dark_grey;
+
+            &:hover {
+              background: $cold_grey;
+              border-color: $darker_grey;
+            }
+          }
+        }
+      }
+    }
+  }
+}
