@@ -2,6 +2,7 @@
 
   class HistoryView implements IView {
     private $form;
+    private $scripts = '';
     private $transactions = array();
 
     public function __construct() {
@@ -9,7 +10,7 @@
     }
 
     public function getScripts() {
-      return '';
+      return $this->scripts;
     }
 
     public function getTitle() {
@@ -46,10 +47,15 @@
           );
         }
       }
+
+      $this->scripts .= '<script type="text/javascript" src="assets/js/transaction_history.js"></script>';
+      $this->scripts .= '<script type="text/javascript">';
+      $this->scripts .= "app.transaction_history.init('#transaction_history');";
+      $this->scripts .= '</script>';
     }
 
     public function show() {
-      echo '<table class="value_list">';
+      echo '<table class="value_list" id="transaction_history">';
       echo '<thead>';
       echo '<tr>';
       echo '<td class="date">Date</td>';

@@ -207,6 +207,20 @@ body {
             }
           }
         }
+
+        &.edit_active {
+          span.button.mode_edit,
+          span.button.delete {
+            display: none;
+          }
+        }
+
+        &:not(.edit_active) {
+          span.button.cancel,
+          span.button.done {
+            display: none;
+          }
+        }
       }
     }
 
