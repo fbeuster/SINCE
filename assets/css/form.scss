@@ -75,6 +75,7 @@ body {
     label {
       display: block;
       margin-bottom: 1em;
+      width: 30em;
 
       &.combo {
         position: relative;
@@ -116,6 +117,7 @@ body {
       &.number {
         display: inline-block;
         margin-right: 2em;
+        width: 6em;
 
         span {
           display: block;
@@ -153,10 +155,25 @@ body {
 
       input[type=color] {
         padding: 0;
+        vertical-align: bottom;
       }
 
       input[type=number] {
         padding-right: 0;
+      }
+
+      &.has_error {
+        input,
+        select {
+          border-color: $red;
+        }
+      }
+
+      &.required span:after {
+        content: "*";
+        color: $red;
+        display: inline-block;
+        margin-left: 0.25em;
       }
     }
 

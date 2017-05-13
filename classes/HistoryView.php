@@ -58,7 +58,7 @@
 
     public function show() {
       echo '<table class="value_list" id="transaction_history">';
-      echo '<thead>';
+      echo '<thead>'."\n";
       echo '<tr>';
       echo '<td class="date">Date</td>';
       echo '<td class="text">Customer</td>';
@@ -69,14 +69,14 @@
       echo '<td class="number">Brutto</td>';
       echo '<td class="text">Category</td>';
       echo '<td class="actions"></td>';
-      echo '</tr>';
+      echo '</tr>'."\n";
       echo '</thead>';
-      echo '<tbody>';
+      echo '<tbody>'."\n";
 
       if (!count($this->transactions)) {
         echo '<tr>';
         echo '<td colspan="8">No transactions</td>';
-        echo '</tr>';
+        echo '</tr>'."\n";
 
       } else {
         foreach ($this->transactions as $transaction) {
@@ -111,12 +111,12 @@
           echo '<span class="button done material-icons" title="Save changes">done</span>';
           echo '<span class="button cancel material-icons" title="Cancel">cancel</span>';
           echo '</td>';
-          echo '</tr>';
+          echo '</tr>'."\n";
         }
       }
 
       echo '</tbody>';
-      echo '</table>';
+      echo '</table>'."\n";
 
       $this->form->show();
     }

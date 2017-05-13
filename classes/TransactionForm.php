@@ -7,6 +7,7 @@
     private $success    = false;
 
     public function __construct() {
+      $this->loadDefaultValues();
       $this->handlePost();
       $this->loadData();
     }
@@ -14,6 +15,13 @@
     private function handlePost() {
       if (isset($_POST, $_POST['add_transaction'])) {
         $this->has_data = true;
+
+        foreach ($this->values as $key => $value) {
+          if (isset($_POST[$key])) {
+            $this->values[$key] = trim($_POST[$key]);
+          }
+        }
+
         $this->validate();
       }
 
@@ -50,6 +58,7 @@
 
         if ($id) {
           $this->success = true;
+          $this->loadDefaultValues();
         }
       }
     }
@@ -66,58 +75,116 @@
       }
     }
 
-    private function makeInputColor($name, $value, $length, $placeholder, $label) {
+    private function loadDefaultValues() {
+      $this->values   = array(
+        'date'        => '',
+        'customer'    => '',
+        'color'       => '#ffffff',
+        'description' => '',
+        'category'    => '',
+        'netto'       => 0,
+        'tax_7'       => 0,
+        'tax_19'      => 0,
+        'brutto'      => 0
+      );
+    }
+
+    private function makeInputColor($name, $length, $placeholder, $label) {
       $text = '';
-      $text .= '<label>';
+      $text .= '<label';
+
+      if (isset($this->errors[$name])) {
+        $text .= ' class="has_error"';
+      }
+
+      $text .= '>';
       $text .= '<span>'.$label.'</span>';
-      $text .= '<input type="color" name="'.$name.'" maxlength="'.$length.'" placeholder="'.$placeholder.'" title="Click to select a color" value="'.$value.'">';
-      $text .= '</label>';
+      $text .= '<input type="color" name="'.$name.'" maxlength="'.$length.'" placeholder="'.$placeholder.'" title="Click to select a color" value="'.$this->values[$name].'">';
+      $text .= '</label>'."\n";
 
       return $text;
     }
 
-    private function makeInputDate($name, $value, $label) {
+    private function makeInputDate($name, $label) {
       $date = '';
-      $date .= '<label>';
+      $date .= '<label class="required';
+
+      if (isset($this->errors[$name])) {
+        $date .= ' has_error';
+      }
+
+      $date .= '">';
       $date .= '<span>'.$label.'</span>';
-      $date .= '<input type="date" name="'.$name.'" placeholder="YYYY-MM-DD" value="'.$value.'">';
-      $date .= '</label>';
+      $date .= '<input type="date" name="'.$name.'" placeholder="YYYY-MM-DD" value="'.$this->values[$name].'" required="required">';
+      $date .= '</label>'."\n";
 
       return $date;
     }
 
-    private function makeInputNumber($name, $value, $label) {
+    private function makeInputNumber($name, $label, $required = false) {
       $number = '';
-      $number .= '<label class="number">';
+      $number .= '<label class="number';
+
+      if ($required) {
+        $number .= ' required';
+      }
+
+      if (isset($this->errors[$name])) {
+        $number .= ' has_error';
+      }
+
+      $number .= '">';
       $number .= '<span>'.$label.'</span>';
-      $number .= '<input type="number" step="0.01" value="'.$value.'" name="'.$name.'">';
+      $number .= '<input type="number" step="0.01" value="'.$this->values[$name].'" name="'.$name.'"';
+
+      if ($required) {
+        $number .= ' required="required"';
+      }
+
+      $number .= '>';
       $number .= '</label>';
 
       return $number;
     }
 
-    private function makeInputText($name, $value, $length, $placeholder, $label) {
+    private function makeInputText($name, $length, $placeholder, $label) {
       $text = '';
-      $text .= '<label>';
+      $text .= '<label class="required';
+
+      if (isset($this->errors[$name])) {
+        $text .= ' has_error';
+      }
+
+      $text .= '">';
       $text .= '<span>'.$label.'</span>';
-      $text .= '<input type="text" name="'.$name.'" maxlength="'.$length.'" placeholder="'.$placeholder.'" value="'.$value.'" autocomplete="off" class="combo">';
-      $text .= '</label>';
+      $text .= '<input type="text" name="'.$name.'" maxlength="'.$length.'" placeholder="'.$placeholder.'" value="'.$this->values[$name].'" autocomplete="off" class="combo" required="required">';
+      $text .= '</label>'."\n";
 
       return $text;
     }
 
-    private function makeSelect($name, $value, $options, $label) {
+    private function makeSelect($name, $options, $label) {
       $options = array('-1' => 'Select category...') + $options;
 
       $select = '';
-      $select .= '<label>';
+      $select .= '<label class="required';
+
+      if (isset($this->errors[$name])) {
+        $select .= ' has_error';
+      }
+
+      $select .= '">';
       $select .= '<span>'.$label.'</span>';
-      $select .= '<select name="'.$name.'">';
+      $select .= '<select name="'.$name.'" required="required">';
 
       foreach ($options as $key => $label) {
+        if ('-1' == $key) {
+          $key = '';
+        }
+
         $select .= '<option value="'.$key.'"';
 
-        if (trim($value) == $key) {
+        if ($this->values[$name] == $key) {
           $select .= ' selected="selected"';
         }
 
@@ -127,7 +194,7 @@
       }
 
       $select .= '</select>';
-      $select .= '</label>';
+      $select .= '</label>'."\n";
 
       return $select;
     }
@@ -153,28 +220,28 @@
         echo '</div>';
       }
 
-      echo '<form action="'.$_SERVER['REQUEST_URI'].'" method="post">';
-      echo '<fieldset>';
-      echo '<legend>Add Transaction</legend>';
+      echo '<form action="'.$_SERVER['REQUEST_URI'].'" method="post">'."\n";
+      echo '<fieldset>'."\n";
+      echo '<legend>Add Transaction</legend>'."\n";
 
-      echo $this->makeInputDate('date', '', 'Date');
-      echo $this->makeInputText('customer', '', 128,
+      echo $this->makeInputDate('date', 'Date');
+      echo $this->makeInputText('customer', 128,
                                 'Customer name',
                                 'Customer');
       echo $this->makeInputColor('color', '#ffffff', 7,
                                 'Customer color',
                                 'Color');
-      echo $this->makeInputText('description', '', 128,
+      echo $this->makeInputText('description', 128,
                                 'Description text',
                                 'Description');
-      echo $this->makeSelect('category', '', $this->categories, 'Category');
-      echo $this->makeInputNumber('netto', 0, 'Netto');
-      echo $this->makeInputNumber('tax_7', 0, '7% Tax');
-      echo $this->makeInputNumber('tax_19', 0, '19% Tax');
-      echo $this->makeInputNumber('brutto', 0, 'Brutto');
-      echo '<input type="submit" value="Insert transaction" name="add_transaction">';
-      echo '</fieldset>';
-      echo '</form>';
+      echo $this->makeSelect('category', $this->categories, 'Category');
+      echo $this->makeInputNumber('netto', 'Netto', true);
+      echo $this->makeInputNumber('tax_7', '7% Tax');
+      echo $this->makeInputNumber('tax_19', '19% Tax');
+      echo $this->makeInputNumber('brutto', 'Brutto', true);
+      echo '<input type="submit" value="Insert transaction" name="add_transaction">'."\n";
+      echo '</fieldset>'."\n";
+      echo '</form>'."\n";
     }
 
     private function validate() {
@@ -183,72 +250,69 @@
       $tax7   = 0;
       $tax19  = 0;
 
-      if (!isset($_POST['date']) || trim($_POST['date']) == '') {
+      if ($this->values['date'] == '') {
         $this->errors['date'] = 'empty date';
 
-      } else if (!strtotime($_POST['date'])) {
+      } else if (!strtotime($this->values['date'])) {
         $this->errors['date'] = 'invalid date';
       }
 
-      if (!isset($_POST['customer']) || trim($_POST['customer']) == '') {
+      if ($this->values['customer'] == '') {
         $this->errors['customer'] = 'empty customer';
       }
 
-      if (!isset($_POST['description']) || trim($_POST['description']) == '') {
+      if ($this->values['description'] == '') {
         $this->errors['description'] = 'empty description';
       }
 
-      if (!isset($_POST['category']) || trim($_POST['category']) == '') {
+      if ($this->values['category'] == '') {
         $this->errors['category'] = 'empty category';
-
-      } else if (trim($_POST['category']) == '-1') {
-        $this->errors['category'] = 'no category';
       }
 
-      if (!isset($_POST['netto']) || trim($_POST['netto']) == '') {
+      if ($this->values['netto'] == '') {
         $this->errors['netto'] = 'empty netto';
 
-      } else if (!is_numeric(trim($_POST['netto']))) {
+      } else if (!is_numeric($this->values['netto'])) {
         $this->errors['netto'] = 'netto nan';
 
-      } else if (trim($_POST['netto']) == 0) {
+      } else if ($this->values['netto'] == 0) {
         $this->errors['netto'] = 'netto can\'t be zero';
 
       } else {
-        $netto = trim($_POST['netto']);
+        $netto = $this->values['netto'];
       }
 
-      if (!isset($_POST['brutto']) || trim($_POST['brutto']) == '') {
+      if ($this->values['brutto'] == '') {
         $this->errors['brutto'] = 'empty brutto';
 
-      } else if (!is_numeric(trim($_POST['brutto']))) {
+      } else if (!is_numeric($this->values['brutto'])) {
         $this->errors['brutto'] = 'brutto nan';
 
-      } else if (trim($_POST['brutto']) == 0) {
+      } else if ($this->values['brutto'] == 0) {
         $this->errors['brutto'] = 'brutto can\'t be zero';
 
       } else {
-        $brutto = trim($_POST['brutto']);
+        $brutto = $this->values['brutto'];
       }
 
-      if (!isset($_POST['tax7']) || trim($_POST['tax7']) == '') {
+      if ($this->values['tax_7'] == '') {
         $tax7 = 0;
 
-      } else if (!is_numeric(trim($_POST['tax7']))) {
-        $this->errors['tax7'] = 'tax7 nan';
+      } else if (!is_numeric($this->values['tax_7'])) {
+        $this->errors['tax_7'] = 'tax7 nan';
 
       } else {
-        $tax7 = trim($_POST['tax7']);
+        $tax7 = $this->values['tax_7'];
       }
 
-      if (!isset($_POST['tax19']) || trim($_POST['tax19']) == '') {
+      if ($this->values['tax_19'] == '') {
         $tax19 = 0;
 
-      } else if (!is_numeric(trim($_POST['tax19']))) {
-        $this->errors['tax19'] = 'tax19 nan';
+      } else if (!is_numeric($this->values['tax_19'])) {
+        $this->errors['tax_19'] = 'tax19 nan';
 
       } else {
-        $tax19 = trim($_POST['tax19']);
+        $tax19 = $this->values['tax_19'];
       }
 
       if (empty($errors)) {

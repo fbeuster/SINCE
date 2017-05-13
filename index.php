@@ -55,7 +55,7 @@
       </div>
     </div>
   </body>
-  <script src="//d3js.org/d3.v3.min.js"></script>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <script src="assets/js/lib/_utils.js"></script>
   <script src="assets/js/dialog.js"></script>
