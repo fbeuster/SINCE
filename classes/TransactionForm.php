@@ -2,6 +2,8 @@
 
   class TransactionForm {
     private $categories = array();
+    private $has_data   = false;
+    private $is_valid   = false;
     private $success    = false;
 
     public function __construct() {
@@ -11,6 +13,11 @@
 
     private function handlePost() {
       if (isset($_POST, $_POST['add_transaction'])) {
+        $this->has_data = true;
+        $this->validate();
+      }
+
+      if ($this->is_valid) {
         $db     = Database::getDB();
 
         # is existing customer?
@@ -126,6 +133,26 @@
     }
 
     public function show() {
+      if (!empty($this->errors)) {
+        echo '<div class="form errors">';
+        echo '<div class="title">Error</div>';
+        echo '<ul>';
+        foreach ($this->errors as $key => $error) {
+          echo '<li>'.$error.'</li>';
+        }
+        echo '</ul>';
+        echo '</div>';
+      }
+
+      if ($this->has_data && $this->success) {
+        echo '<div class="form success">';
+        echo '<div class="title">Success</div>';
+        echo '<ul>';
+        echo '<li>The transaction has been added.</li>';
+        echo '</ul>';
+        echo '</div>';
+      }
+
       echo '<form action="'.$_SERVER['REQUEST_URI'].'" method="post">';
       echo '<fieldset>';
       echo '<legend>Add Transaction</legend>';
@@ -148,6 +175,89 @@
       echo '<input type="submit" value="Insert transaction" name="add_transaction">';
       echo '</fieldset>';
       echo '</form>';
+    }
+
+    private function validate() {
+      $brutto = 0;
+      $netto  = 0;
+      $tax7   = 0;
+      $tax19  = 0;
+
+      if (!isset($_POST['date']) || trim($_POST['date']) == '') {
+        $this->errors['date'] = 'empty date';
+
+      } else if (!strtotime($_POST['date'])) {
+        $this->errors['date'] = 'invalid date';
+      }
+
+      if (!isset($_POST['customer']) || trim($_POST['customer']) == '') {
+        $this->errors['customer'] = 'empty customer';
+      }
+
+      if (!isset($_POST['description']) || trim($_POST['description']) == '') {
+        $this->errors['description'] = 'empty description';
+      }
+
+      if (!isset($_POST['category']) || trim($_POST['category']) == '') {
+        $this->errors['category'] = 'empty category';
+
+      } else if (trim($_POST['category']) == '-1') {
+        $this->errors['category'] = 'no category';
+      }
+
+      if (!isset($_POST['netto']) || trim($_POST['netto']) == '') {
+        $this->errors['netto'] = 'empty netto';
+
+      } else if (!is_numeric(trim($_POST['netto']))) {
+        $this->errors['netto'] = 'netto nan';
+
+      } else if (trim($_POST['netto']) == 0) {
+        $this->errors['netto'] = 'netto can\'t be zero';
+
+      } else {
+        $netto = trim($_POST['netto']);
+      }
+
+      if (!isset($_POST['brutto']) || trim($_POST['brutto']) == '') {
+        $this->errors['brutto'] = 'empty brutto';
+
+      } else if (!is_numeric(trim($_POST['brutto']))) {
+        $this->errors['brutto'] = 'brutto nan';
+
+      } else if (trim($_POST['brutto']) == 0) {
+        $this->errors['brutto'] = 'brutto can\'t be zero';
+
+      } else {
+        $brutto = trim($_POST['brutto']);
+      }
+
+      if (!isset($_POST['tax7']) || trim($_POST['tax7']) == '') {
+        $tax7 = 0;
+
+      } else if (!is_numeric(trim($_POST['tax7']))) {
+        $this->errors['tax7'] = 'tax7 nan';
+
+      } else {
+        $tax7 = trim($_POST['tax7']);
+      }
+
+      if (!isset($_POST['tax19']) || trim($_POST['tax19']) == '') {
+        $tax19 = 0;
+
+      } else if (!is_numeric(trim($_POST['tax19']))) {
+        $this->errors['tax19'] = 'tax19 nan';
+
+      } else {
+        $tax19 = trim($_POST['tax19']);
+      }
+
+      if (empty($errors)) {
+        $this->is_valid = true;
+      }
+
+      # make warnings for
+      #   both taxes not 0
+      #   values not adding up
     }
   }
 

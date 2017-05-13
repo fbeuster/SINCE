@@ -1,6 +1,65 @@
 @import 'lib/_color';
 
 body {
+  div.form.errors,
+  div.form.success {
+    border: 1px solid;
+    margin: 2em 0;
+
+    ul {
+      background: $white;
+      color: $cold_black;
+      list-style: none;
+      margin: 0;
+      padding: 0.25em 1em;
+
+      li {
+        padding-left: 1em;
+        text-indent: -0.7em;
+
+        &:before {
+          content: "\2022";
+          font-weight: bold;
+          padding-right: 0.5em;
+        }
+      }
+    }
+
+    .title {
+      color: $white;
+      font-weight: bold;
+      padding: 0.25em 1em;
+    }
+  }
+
+  div.form.errors {
+    border-color: $red;
+
+    ul {
+      li:before {
+        color: $red;
+      }
+    }
+
+    .title {
+      background: $red;
+    }
+  }
+
+  div.form.success {
+    border-color: $green;
+
+    ul {
+      li:before {
+        color: $green;
+      }
+    }
+
+    .title {
+      background: $green;
+    }
+  }
+
   fieldset {
     border: 0;
     margin-top: 2.5em;

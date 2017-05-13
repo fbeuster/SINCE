@@ -5,6 +5,17 @@ app.combo = {
     $('input.combo').on('change paste keyup', this.inputChangeListener);
     $('input.combo').on('focusout', this.inputFocusoutListener);
     $('input.combo').parent().addClass('combo');
+
+    if ($('.form.success').length > 0) {
+      setTimeout(function(){
+        $('div.form.success').animate({
+          'height' : 0,
+          'margin-top' : 0
+        }, 400, function(){
+          $('div.form.success').remove();
+        });
+      }, 5000);
+    }
   },
 
   attachDropdown : function($input, search_term) {
