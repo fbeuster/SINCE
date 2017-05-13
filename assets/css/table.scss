@@ -1,0 +1,118 @@
+
+@import 'lib/_color';
+
+body {
+  table.value_list {
+    border-collapse: collapse;
+
+    thead {
+      tr {
+        td {
+          border-bottom: 1px solid $darker_grey;
+          font-weight: bold;
+          margin: 0;
+          padding: 0.25em;
+        }
+      }
+    }
+
+    tbody,
+    tfoot {
+      tr {
+        td {
+          margin: 0;
+          padding: 0.25em;
+          vertical-align: top;
+
+          &.negative {
+            color: $red;
+          }
+
+          &.number {
+            text-align: right;
+            width: 5em;
+          }
+        }
+      }
+    }
+
+    tbody {
+      tr {
+
+        &:nth-child(2n) {
+          td {
+            background: $grey;
+          }
+        }
+
+        &:not(.income) {
+          td {
+            border-top: 1px dotted $darker_grey;
+          }
+        }
+
+        &:not(.income) ~ tr:not(.income) {
+          td {
+            border-top: 0;
+          }
+        }
+
+        td {
+          background: $light_grey;
+
+          &.date {
+            width: 5em;
+          }
+
+          &.actions {
+            width: 3em;
+
+            span.button {
+              color: $darker_grey;
+              cursor: pointer;
+              display: inline-block;
+              height: 1em;
+              overflow: hidden;
+              visibility: hidden;
+              width: 1em;
+
+              &:hover {
+                color: $green;
+              }
+            }
+          }
+        }
+
+        &:hover {
+          td.actions {
+            span.button {
+              visibility: visible;
+            }
+          }
+        }
+
+        &.edit_active {
+          span.button.mode_edit,
+          span.button.delete {
+            display: none;
+          }
+        }
+
+        &:not(.edit_active) {
+          span.button.cancel,
+          span.button.done {
+            display: none;
+          }
+        }
+      }
+    }
+
+    tfoot {
+      tr {
+        td {
+          border-top: 1px solid $darker_grey;
+        }
+      }
+    }
+  }
+}

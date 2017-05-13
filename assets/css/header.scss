@@ -1,0 +1,47 @@
+
+@import 'lib/_color';
+
+body {
+  header {
+    background: $green;
+    padding-top: 2em;
+
+    div.wrapper {
+      max-width: 76em;
+      padding: 0;
+    }
+
+    h1 {
+      color: $cold_grey;
+      font-size: 2em;
+      padding: 0 1em;
+    }
+
+    nav {
+      menu {
+        display: flex;
+
+        li {
+          display: block;
+
+          &:first-child {
+            padding-left: 1em;
+          }
+
+          a {
+            color: $cold_grey;
+            display: block;
+            font-size: 1.25em;
+            padding: 0 1em;
+            text-decoration: none;
+
+            &:hover {
+              background: $cold_grey;
+              color: $cold_black;
+            }
+          }
+        }
+      }
+    }
+  }
+}
