@@ -5,9 +5,9 @@ app.distribution_chart = {
   chart   : '',
   color   : d3.scale.category20(),
   data    : null,
-  height  : 320,
+  height  : 256,
   margin  : 16,
-  width   : 320,
+  width   : 256,
   radius  : 0,
 
   dataAmount : function(d) {
