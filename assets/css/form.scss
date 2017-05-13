@@ -192,5 +192,13 @@ body {
         cursor: pointer;
       }
     }
+
+    p {
+      margin-bottom: 1em;
+
+      span {
+        color: $red;
+      }
+    }
   }
 }

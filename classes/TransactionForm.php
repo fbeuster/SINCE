@@ -239,6 +239,7 @@
       echo $this->makeInputNumber('tax_7', '7% Tax');
       echo $this->makeInputNumber('tax_19', '19% Tax');
       echo $this->makeInputNumber('brutto', 'Brutto', true);
+      echo '<p>Fields marked with a <span>*</span> are required and must be filled appropiately.</p>'."\n";
       echo '<input type="submit" value="Insert transaction" name="add_transaction">'."\n";
       echo '</fieldset>'."\n";
       echo '</form>'."\n";
