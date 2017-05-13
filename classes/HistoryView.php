@@ -84,10 +84,10 @@
           echo '<td class="date">';
           echo date('d.m.Y', strtotime($transaction['date']));
           echo '</td>';
-          echo '<td class="text">';
+          echo '<td class="text customer">';
           echo $transaction['customer'];
           echo '</td>';
-          echo '<td class="text">';
+          echo '<td class="text description">';
           echo $transaction['description'];
           echo '</td>';
           echo '<td class="number">';

@@ -20,31 +20,45 @@ app.transaction_history = {
   },
 
   deleteButtonClick : function() {
-    var transaction_id = $(this).closest('tr').attr('data-transaction-id');
-    // TODO add confirmation dialog
-    app.transaction_history.deleteTransaction(transaction_id);
+    app.transaction_history.transaction_id = $(this).closest('tr').attr('data-transaction-id');
+    app.transaction_history.deleteTransaction();
   },
 
-
-  deleteTransaction : function(transaction_id) {
-    $.post({
-      url: 'api.php',
-      data: {
-        'action' : 'delete_transaction',
-        'transaction_id' : transaction_id
-      },
-      success: function(data) {
-        if (data == 'success') {
-          $('tr[data-transaction-id=' + transaction_id + ']')
-            .find('td')
-            .wrapInner('<div></div>')
-            .parent()
-            .find('td > div')
-            .slideUp(400, function(){
-              $(this).parent().parent().remove();
-            });
+  deleteConfirm : function(confirmed) {
+    if (confirmed) {
+      $.post({
+        url: 'api.php',
+        data: {
+          'action' : 'delete_transaction',
+          'transaction_id' : app.transaction_history.transaction_id
+        },
+        success: function(data) {
+          if (data == 'success') {
+            $('tr[data-transaction-id=' + app.transaction_history.transaction_id + ']')
+              .find('td')
+              .wrapInner('<div></div>')
+              .parent()
+              .find('td > div')
+              .slideUp(400, function(){
+                $(this).parent().parent().remove();
+              });
+          }
         }
-      }
+      });
+    }
+  },
+
+  deleteTransaction : function() {
+    var $tr         = $('tr[data-transaction-id=' + app.transaction_history.transaction_id + ']'),
+        customer    = $tr.find('td.customer').text(),
+        date        = $tr.find('td.date').text(),
+        description = $tr.find('td.description').text(),
+        transaction = '"' + description + '" from ' + customer;
+
+    app.dialog.open({
+      'callback' : this.deleteConfirm,
+      'title' : 'Warning!',
+      'message' : 'Do you want to delete the transaction ' + transaction + '?'
     });
   },
 
