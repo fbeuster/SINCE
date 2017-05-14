@@ -59,7 +59,7 @@
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <script src="assets/js/lib/_utils.js"></script>
   <script src="assets/js/dialog.js"></script>
-  <script src="assets/js/form.js"></script>
+  <script src="assets/js/combo.js"></script>
   <script type="text/javascript">
     $(document).ready(function(){
       app.combo.init();
