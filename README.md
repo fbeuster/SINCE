@@ -93,18 +93,21 @@ These pie charts illustrate the distribution of your income and expenses, based 
 * Support for multiple years
 * Paging for long transaction history lists
 * More charts
+* Make API [more robust](#disclaimer)
 
 ## Disclaimer
 
 The tool **SINCE** doesn't provide any authentification (as of now) since it was developed for the use in a local environment and single user usage. Though it is possible to use the tool with multiple users, you have to keep in mind, that every user has access to all of the data.
 
-Unless you implement the necessary securtiy functionality yourself, using **SINCE** in any publicly accessible environment is **strongly not recommended**.
+Unless you implement the necessary securtiy functionality yourself, using SINCE in any publicly accessible environment is **strongly not recommended**.
+
+The API is relatively open right now, and can easily be used to remove all data from the database. This again speaks for keeping SINCE in local environment, only accessible to authorized people.
 
 Also, this is still a prototype and features can change drastically.
 
 ## Remarks
 
-This project was developed from teh ground up, though some external pieces where be used.
+This project was developed from the ground up, though some external pieces where be used.
 
 * [Material Design Icons](https://github.com/google/material-design-icons/tree/master/iconfont) - Simple und understandable icons
 * [Lixter](https://github.com/fbeuster/beuster-se) - I reused some of my existing classes from here.
