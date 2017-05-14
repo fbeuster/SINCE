@@ -25,13 +25,13 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Incomes und Expenses</title>
+    <title>Simple Income and Expense App</title>
     <link rel="stylesheet" href="assets/css/styles.css">
   </head>
   <body>
     <header>
       <div class="wrapper">
-        <h1>Business Incomes und Expenses</h1>
+        <h1>Simple Income and Expense App</h1>
         <nav>
           <menu>
             <li><a href="/history">Transaction History</a></li>

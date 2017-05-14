@@ -5,7 +5,6 @@
 *.psd
 
 # this is webspace specific
-.htaccess
 .htpasswd
 Robots.txt
 google*.html
@@ -19,3 +18,4 @@ index*.*
 *.sass-cache*
 *.css
 *.css.map
+README.html

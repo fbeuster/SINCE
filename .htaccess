@@ -1,0 +1,13 @@
+
+RewriteEngine on
+
+RewriteBase /
+
+RewriteRule ^(.*)(Ã¤|Ã„|ä|Ä)(.*) $1ae$3 [L,QSA]
+RewriteRule ^(.*)(Ã¶|Ã–|ö|Ö)(.*) $1oe$3 [L,QSA]
+RewriteRule ^(.*)(Ã¼|Ã½|ü|Ü)(.*) $1ue$3 [L,QSA]
+RewriteRule ^(.*)(ÃŸ|ß)(.*) $1ss$3 [L,QSA]
+
+RewriteRule ^$ index.php [L,QSA]
+
+RewriteRule ^([a-zA-Z0-9\-\_]+)$ index.php?view=$1 [L,QSA]
