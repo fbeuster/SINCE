@@ -3,6 +3,7 @@ var app = app || {};
 app.combo = {
   init : function() {
     $('input.combo').on('change paste keyup', this.inputChangeListener);
+    $('input.combo').on('keydown', this.keydownListener);
     $('input.combo').on('focusout', this.inputFocusoutListener);
     $('input.combo').parent().addClass('combo');
 
@@ -50,13 +51,77 @@ app.combo = {
     $input.next('.suggestions').remove();
   },
 
-  inputChangeListener : function() {
-    var search_term = this.value.trim();
+  handleControlKey : function(event, $input) {
+    // do we actually have suggestions?
+    if ($input.next('.suggestions').length > 0 &&
+        $input.next('.suggestions').children('li').length > 0) {
+      var $suggestions = $input.next('.suggestions');
 
-    app.combo.detachDropdown($(this));
+      // handle arrow down press
+      if (event.which == app.utils.keys.ARROW_DOWN) {
+        var $selected = $suggestions.find('li.selected');
 
-    if (search_term != '' && $(this).is(':focus')) {
-      app.combo.attachDropdown($(this), search_term);
+        if ($selected.length > 0) {
+          if (!$selected.is(':last-child')) {
+            $selected.next().addClass('selected');
+            $selected.removeClass('selected');
+          }
+
+        } else {
+          $suggestions.find('li:first-child').addClass('selected');
+        }
+
+      // handle arrow up press
+      } else if (event.which == app.utils.keys.ARROW_UP) {
+        var $selected = $suggestions.find('li.selected');
+
+        if ($selected.length > 0) {
+          if (!$selected.is(':first-child')) {
+            $selected.prev().addClass('selected');
+          }
+
+          $selected.removeClass('selected');
+        }
+
+      // handle tab and enter press
+      } else if ( event.which == app.utils.keys.ENTER ||
+                  event.which == app.utils.keys.TAB) {
+        var $selected = $suggestions.find('li.selected');
+
+        $input.val($selected.text());
+        $input.blur();
+        $input.focus();
+
+      } else {
+      }
+    }
+  },
+
+  inputChangeListener : function(event) {
+    var control_keys = [app.utils.keys.ALT,
+                        app.utils.keys.ARROW_DOWN,
+                        app.utils.keys.ARROW_LEFT,
+                        app.utils.keys.ARROW_RIGHT,
+                        app.utils.keys.ARROW_UP,
+                        app.utils.keys.CAPS,
+                        app.utils.keys.CTRL,
+                        app.utils.keys.ENTER,
+                        app.utils.keys.SHIFT,
+                        app.utils.keys.TAB ];
+
+    // do we have a control keypress?
+    if (event.type == 'keyup' && control_keys.indexOf(event.which) > -1) {
+      app.combo.handleControlKey(event, $(this));
+
+    // no special key, just search then
+    } else {
+      var search_term = this.value.trim();
+
+      app.combo.detachDropdown($(this));
+
+      if (search_term != '' && $(this).is(':focus')) {
+        app.combo.attachDropdown($(this), search_term);
+      }
     }
   },
 
@@ -70,5 +135,18 @@ app.combo = {
     $input.val($(this).text());
 
     $input.blur();
+  },
+
+  keydownListener : function(event) {
+    var control_keys = [app.utils.keys.ARROW_DOWN,
+                        app.utils.keys.ARROW_UP,
+                        app.utils.keys.ENTER,
+                        app.utils.keys.TAB ];
+
+    if (event.type == 'keydown' &&
+        control_keys.indexOf(event.which) > -1 &&
+        $(this).next('.suggestions').length > 0) {
+      event.preventDefault();
+    }
   }
 };
