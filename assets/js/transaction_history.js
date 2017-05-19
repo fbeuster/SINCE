@@ -16,7 +16,27 @@ app.transaction_history = {
   },
 
   cancelButtonClick : function() {
-    $(this).closest('tr').removeClass('edit_active');
+    app.transaction_history.clearEditMode();
+  },
+
+  clearEditMode : function() {
+    var $row = $(app.transaction_history.table).find('.edit_active');
+
+    $row.find('td:not(.actions)').each(function unwrapInput(){
+      if ($(this).hasClass('date')) {
+        var date    = new Date($(this).attr('data-value')),
+            options = {year: 'numeric', month: '2-digit', day: '2-digit' };
+        $(this).text( date.toLocaleString('de-DE', options) );
+
+      } else if($(this).hasClass('number')) {
+        $(this).text( parseFloat($(this).attr('data-value')).toFixed(2) + ' €' );
+
+      } else {
+        $(this).text( $(this).attr('data-value') );
+      }
+    });
+
+    $row.removeClass('edit_active');
   },
 
   deleteButtonClick : function() {
@@ -67,7 +87,52 @@ app.transaction_history = {
   },
 
   editButtonClick : function() {
-    $(app.transaction_history.table).find('.edit_active').removeClass('edit_active');
-    $(this).closest('tr').addClass('edit_active');
+    app.transaction_history.clearEditMode();
+    app.transaction_history.startEditMode($(this).closest('tr'));
+  },
+
+  keyListener : function(event) {
+    switch(event.which) {
+      case app.utils.keys.ESCAPE:
+        app.transaction_history.clearEditMode();
+        break;
+
+      default:
+        break;
+    }
+  },
+
+  startEditMode : function($row) {
+    $(document).on('keydown', app.transaction_history.keyListener);
+
+    $row.addClass('edit_active');
+
+    $row.find('td:not(.actions)').each(function wrapInput(){
+      var $input = $('<input></input>');
+
+      if ($(this).hasClass('date')) {
+        $input.attr({
+          'placeholder' : 'YYYY-MM-DD',
+          'type' : 'date'
+        });
+
+      } else if($(this).hasClass('number')) {
+        $input.attr('type', 'number');
+
+      } else {
+        $input.attr('type', 'text');
+        $input.addClass('combo');
+        $(this).addClass('combo');
+      }
+
+      $input.attr({
+        'name'  : $(this).attr('data-name'),
+        'title' : $(this).text(),
+        'value' : $(this).attr('data-value')
+      });
+      $input.css('width', $(this).width());
+
+      $(this).html($input);
+    });
   }
 };

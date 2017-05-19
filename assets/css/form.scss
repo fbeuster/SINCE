@@ -202,4 +202,48 @@ body {
       }
     }
   }
+
+  .value_list {
+    input {
+      font-size: 1em;
+    }
+
+    td.combo {
+      position: relative;
+
+      ul {
+        color: $darker_grey;
+        left: 0.25em;
+        list-style: none;
+        position: absolute;
+        top: 1.75em;
+        width: 22em;
+        z-index: 1;
+
+        li {
+          background: $white;
+          border: 1px solid $darker_grey;
+          border-bottom-color: $dark_grey;
+          border-top: 0;
+          cursor: pointer;
+          padding: 0 0.25em;
+
+          &:hover,
+          &.selected {
+            background: $grey;
+            color: $cold_black;
+          }
+
+          &:first-child {
+            border-top: 1px solid $darker_grey;
+            margin-top: -1px
+          }
+
+          &:last-child {
+            border-bottom-color: $darker_grey;
+          }
+        }
+      }
+    }
+  }
 }

@@ -81,28 +81,28 @@
       } else {
         foreach ($this->transactions as $transaction) {
           echo '<tr data-transaction-id="'.$transaction['id'].'">';
-          echo '<td class="date">';
+          echo '<td class="date" data-name="date" data-value="'.$transaction['date'].'">';
           echo date('d.m.Y', strtotime($transaction['date']));
           echo '</td>';
-          echo '<td class="text customer">';
+          echo '<td class="text customer" data-name="customer" data-value="'.$transaction['customer'].'">';
           echo $transaction['customer'];
           echo '</td>';
-          echo '<td class="text description">';
+          echo '<td class="text description" data-name="description" data-value="'.$transaction['description'].'">';
           echo $transaction['description'];
           echo '</td>';
-          echo '<td class="number">';
+          echo '<td class="number" data-name="netto" data-value="'.$transaction['netto'].'">';
           echo sprintf('%01.2f €', $transaction['netto']);
           echo '</td>';
-          echo '<td class="number">';
+          echo '<td class="number" data-name="tax_7" data-value="'.$transaction['tax_7'].'">';
           echo sprintf('%01.2f €', $transaction['tax_7']);
           echo '</td>';
-          echo '<td class="number">';
+          echo '<td class="number" data-name="tax_19" data-value="'.$transaction['tax_19'].'">';
           echo sprintf('%01.2f €', $transaction['tax_19']);
           echo '</td>';
-          echo '<td class="number">';
+          echo '<td class="number" data-name="brutto" data-value="'.$transaction['brutto'].'">';
           echo sprintf('%01.2f €', $transaction['brutto']);
           echo '</td>';
-          echo '<td class="text">';
+          echo '<td class="text" data-name="category" data-value="'.$transaction['category'].'">';
           echo $transaction['category'];
           echo '</td>';
           echo '<td class="actions">';

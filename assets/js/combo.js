@@ -2,9 +2,9 @@ var app = app || {};
 
 app.combo = {
   init : function() {
-    $('input.combo').on('change paste keyup', this.inputChangeListener);
-    $('input.combo').on('keydown', this.keydownListener);
-    $('input.combo').on('focusout', this.inputFocusoutListener);
+    $('body').on('change paste keyup', 'input.combo', this.inputChangeListener);
+    $('body').on('keydown', 'input.combo', this.keydownListener);
+    $('body').on('focusout', 'input.combo', this.inputFocusoutListener);
     $('input.combo').parent().addClass('combo');
 
     if ($('.form.success').length > 0) {
@@ -45,6 +45,10 @@ app.combo = {
         }
       }
     });
+  },
+
+  bindListeners : function() {
+
   },
 
   detachDropdown : function($input) {
