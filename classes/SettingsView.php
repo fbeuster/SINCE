@@ -16,7 +16,7 @@
     }
 
     public function getTitle() {
-      return 'Settings';
+      return I18n::t('settings.label');
     }
 
     private function handlePost() {
@@ -33,6 +33,7 @@
           # TODO this check should look at available languages
           if (preg_match('#(de|en)#', $_POST['language'])) {
             Settings::set('language', $_POST['language']);
+            // $locales = new Locale($_POST['language']);
 
           } else {
             # TODO some language save error

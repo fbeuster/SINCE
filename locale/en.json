@@ -1,0 +1,11 @@
+{
+  "history" : {
+    "label" : "Transaction history"
+  },
+  "settings" : {
+    "label" : "Settings"
+  },
+  "summary" : {
+    "label" : "Summary"
+  }
+}

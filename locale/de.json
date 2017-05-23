@@ -1,0 +1,11 @@
+{
+  "history" : {
+    "label" : "Transaktionsverlauf"
+  },
+  "settings" : {
+    "label" : "Einstellungen"
+  },
+  "summary" : {
+    "label" : "Zusammenfassungen"
+  }
+}

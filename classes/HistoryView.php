@@ -14,7 +14,7 @@
     }
 
     public function getTitle() {
-      return 'Transaction History';
+      return I18n::t('history.label');
     }
 
     private function loadData() {

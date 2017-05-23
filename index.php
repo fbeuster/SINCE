@@ -19,6 +19,11 @@
     case 'summary'  : $view = new SummaryView();  break;
     default:          $view = new HistoryView();  break;
   }
+
+  $lang = Settings::get('language');
+  $lang = $lang === null ? 'en' : $lang;
+
+  $locales = new Locale($lang);
 ?>
 
 <!DOCTYPE html>
@@ -35,9 +40,15 @@
         <h1>Simple Income and Expense App</h1>
         <nav>
           <menu>
-            <li><a href="/history">Transaction History</a></li>
-            <li><a href="/summary">Summaries</a></li>
-            <li><a href="/settings">Settings</a></li>
+            <li>
+              <a href="/history"><?php I18n::e('history.label'); ?></a>
+            </li>
+            <li>
+              <a href="/summary"><?php I18n::e('summary.label'); ?></a>
+            </li>
+            <li>
+              <a href="/settings"><?php I18n::e('settings.label'); ?></a>
+            </li>
           </menu>
         </nav>
       </div>

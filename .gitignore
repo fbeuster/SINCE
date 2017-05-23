@@ -19,3 +19,7 @@ index*.*
 *.css
 *.css.map
 README.html
+
+# exclude folders
+cache/locale/*
+!.gitignore

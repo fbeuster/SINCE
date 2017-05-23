@@ -18,7 +18,7 @@
     }
 
     public function getTitle() {
-      return 'Summaries';
+      return I18n::t('summary.label');
     }
 
     private function loadData() {
