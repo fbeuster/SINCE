@@ -106,8 +106,13 @@
     <label>
       <span>Change language</span>
       <select name="language">
-        <option value="en">English</option>
-        <option value="de">German</option>
+        <?php foreach ($this->languages as $key => $name) { ?>
+          <option value="<?php echo $key; ?>"
+            <?php if ($this->language == $key) { ?>
+              selected="selected"
+            <?php } ?>
+            ><?php echo $name; ?></option>
+        <?php } ?>
       </select>
     </label>
     <input type="submit" value="Save and reload" name="save_language">
@@ -116,9 +121,14 @@
   <fieldset>
     <label>
       <span>Change currency</span>
-      <select name="language">
-        <option value="usd">US-Dollar $</option>
-        <option value="eur">Euro €</option>
+      <select name="currency">
+        <?php foreach ($this->currencies as $key => $name) { ?>
+          <option value="<?php echo $key; ?>"
+            <?php if ($this->currency == $key) { ?>
+              selected="selected"
+            <?php } ?>
+            ><?php echo $name; ?></option>
+        <?php } ?>
       </select>
     </label>
     <input type="submit" value="Save and reload" name="save_currency">
