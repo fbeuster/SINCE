@@ -5,10 +5,19 @@ app.transaction_history = {
 
   init : function(table) {
     this.table = table;
+
+    if (!$('input[name="set_color"').prop('checked')) {
+      $('label.color')
+        .wrap('<div></div>')
+        .parent()
+        .hide();
+    }
+
     this.bindClickListener();
   },
 
   bindClickListener : function() {
+    $('input[name="set_color"]').change(this.setColorChange);
     $('span.button.cancel').click(this.cancelButtonClick);
     $('span.button.delete').click(this.deleteButtonClick);
     $('span.button.done').click(this.doneButtonClick);
@@ -99,6 +108,22 @@ app.transaction_history = {
 
       default:
         break;
+    }
+  },
+
+  setColorChange : function(event) {
+    if ($(this).prop('checked')) {
+      $('label.color')
+        .parent()
+        .slideDown(400, function(){
+          $('label.color').unwrap();
+        });
+
+    } else {
+      $('label.color')
+        .wrap('<div></div>')
+        .parent()
+        .slideUp(400);
     }
   },
 

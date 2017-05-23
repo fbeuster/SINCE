@@ -38,10 +38,16 @@
 
         } else {
           # no? then create new customer
-          $fields = array('name', 'color');
-          $values = array('ss', array($_POST['customer'],
-                                      $_POST['color']));
-          $id     = $db->insert('customers', $fields, $values);
+          $fields = array('name');
+          $values = array('s', array($_POST['customer']));
+
+          if ($_POST['set_color']) {
+            $fields[]     = 'color';
+            $values[0]    .= 's';
+            $values[1][]  = $_POST['color'];
+          }
+
+          $id = $db->insert('customers', $fields, $values);
         }
 
         # insert transaction
@@ -79,6 +85,7 @@
       $this->values   = array(
         'date'        => '',
         'customer'    => '',
+        'set_color'   => 0,
         'color'       => '#ffffff',
         'description' => '',
         'category'    => '',
@@ -89,15 +96,37 @@
       );
     }
 
-    private function makeInputColor($name, $length, $placeholder, $label) {
-      $text = '';
-      $text .= '<label';
+    private function makeInputCheck($name, $label) {
+      $check = '';
+      $check .= '<label';
 
       if (isset($this->errors[$name])) {
-        $text .= ' class="has_error"';
+        $check .= ' class="has_error"';
       }
 
-      $text .= '>';
+      $check .= '>';
+      $check .= '<span>'.$label.'</span>';
+      $check .= '<input type="checkbox" name="'.$name.'" title="'.$label.'"';
+
+      if ($this->values[$name]) {
+        $check .= ' checked="checked"';
+      }
+
+      $check .= '>';
+      $check .= '</label>'."\n";
+
+      return $check;
+    }
+
+    private function makeInputColor($name, $length, $placeholder, $label) {
+      $text = '';
+      $text .= '<label class="color';
+
+      if (isset($this->errors[$name])) {
+        $text .= ' has_error';
+      }
+
+      $text .= '">';
       $text .= '<span>'.$label.'</span>';
       $text .= '<input type="color" name="'.$name.'" maxlength="'.$length.'" placeholder="'.$placeholder.'" title="Click to select a color" value="'.$this->values[$name].'">';
       $text .= '</label>'."\n";
@@ -228,6 +257,7 @@
       echo $this->makeInputText('customer', 128,
                                 'Customer name',
                                 'Customer');
+      echo $this->makeInputCheck('set_color', 'Assign color');
       echo $this->makeInputColor('color', '#ffffff', 7,
                                 'Customer color',
                                 'Color');
@@ -260,6 +290,11 @@
 
       if ($this->values['customer'] == '') {
         $this->errors['customer'] = 'empty customer';
+      }
+
+      if ($this->values['set_color'] &&
+          !preg_match('/#[0-9a-f]{6}/', $this->values['color'])) {
+        $this->errors['color'] = 'invalid color';
       }
 
       if ($this->values['description'] == '') {

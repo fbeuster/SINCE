@@ -154,6 +154,11 @@ body {
         }
       }
 
+      input[type=checkbox] {
+        vertical-align: bottom;
+        width: 1em;
+      }
+
       input[type=color] {
         padding: 0;
         vertical-align: bottom;
@@ -176,6 +181,10 @@ body {
         display: inline-block;
         margin-left: 0.25em;
       }
+
+      // &.color {
+      //   display: none;
+      // }
     }
 
     input[type=submit] {
