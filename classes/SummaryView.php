@@ -162,77 +162,25 @@
         }
       }
 
+      $this->tables   = array();
+      $this->tables[] = array(
+                    'title'     => 'Yearly Summary',
+                    'turnover'  => $this->turnover,
+                    'types'     => $this->year);
+
+      foreach ($this->quarters as $number => $types) {
+        $this->tables[] = array(
+                      'title'     => $number . '. Quarter',
+                      'turnover'  => $this->quarter_turnovers[$number],
+                      'types'     => $types);
+      }
+
       $this->income_chart   = new IncomeChart();
       $this->expense_chart  = new ExpenseChart();
     }
 
-    private function printValueTable($types, $turnover) {
-      echo '<table class="value_list">';
-      echo '<thead>';
-      echo '<tr>';
-      echo '<td class="text">Category</td>';
-      echo '<td class="number">Netto</td>';
-      echo '<td class="number">7%</td>';
-      echo '<td class="number">19%</td>';
-      echo '<td class="number">Brutto</td>';
-      echo '</tr>';
-      echo '</thead>';
-
-      echo '<tfoot>';
-      echo '<tr class="turnover">';
-      echo '<td></td>';
-      echo '<td class="number '.($turnover['netto'] < 0 ? 'negative' : '').'">';
-      echo sprintf('%01.2f €', $turnover['netto']);
-      echo '</td>';
-      echo '<td class="number '.($turnover['tax_7'] < 0 ? 'negative' : '').'">';
-      echo sprintf('%01.2f €', $turnover['tax_7']);
-      echo '</td>';
-      echo '<td class="number '.($turnover['tax_19'] < 0 ? 'negative' : '').'">';
-      echo sprintf('%01.2f €', $turnover['tax_19']);
-      echo '</td>';
-      echo '<td class="number '.($turnover['brutto'] < 0 ? 'negative' : '').'">';
-      echo sprintf('%01.2f €', $turnover['brutto']);
-      echo '</td>';
-      echo '</tr>';
-      echo '</tfoot>';
-
-      echo '<tbody>';
-
-      foreach ($types as $type => $value) {
-        echo '<tr'.($value['is_income'] ? ' class="income"' : '').'>';
-        echo '<td class="text">';
-        echo $type;
-        echo '</td>';
-        echo '<td class="number">';
-        echo sprintf('%01.2f €', $value['netto']);
-        echo '</td>';
-        echo '<td class="number">';
-        echo sprintf('%01.2f €', $value['tax_7']);
-        echo '</td>';
-        echo '<td class="number">';
-        echo sprintf('%01.2f €', $value['tax_19']);
-        echo '</td>';
-        echo '<td class="number">';
-        echo sprintf('%01.2f €', $value['brutto']);
-        echo '</td>';
-        echo '</tr>';
-      }
-
-      echo '</tbody>';
-      echo '</table>';
-    }
-
     public function show() {
-      echo '<h3>Yearly Summary</h3>';
-      $this->printValueTable($this->year, $this->turnover);
-
-      foreach ($this->quarters as $number => $types) {
-        echo '<h3>'.$number.'. Quartal</h3>';
-        $this->printValueTable($types, $this->quarter_turnovers[$number]);
-      }
-
-      $this->income_chart->show();
-      $this->expense_chart->show();
+      include 'views/summary.php';
     }
   }
 
