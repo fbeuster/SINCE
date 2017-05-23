@@ -31,13 +31,18 @@ body {
     display: inline-block;
     font-size: 1.25em;
     font-weight: bold;
-    margin: 2em 0 1em 0;
+    margin: 2em 0 0 0;
     padding: 0 2em;
   }
 
   h3 {
     font-size: 1.125em;
     font-weight: bold;
-    margin-bottom: 0.889em;
+    margin-top: 1.111em;
+    margin-bottom: 1.111em;
+
+    &.mt2 {
+      margin-top: 2.222em;
+    }
   }
 }

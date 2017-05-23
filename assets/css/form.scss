@@ -212,6 +212,29 @@ body {
     }
   }
 
+  form.settings {
+    fieldset {
+      margin-top: 0.5em;
+      width: 100%;
+
+      label {
+        display: inline-block;
+        margin-right: 2em;
+        width: 21em;
+
+        select,
+        span {
+          width: 10em;
+        }
+      }
+
+      input[type=submit] {
+        display: inline-block;
+        font-size: 1em;
+      }
+    }
+  }
+
   .value_list {
     input {
       font-size: 1em;

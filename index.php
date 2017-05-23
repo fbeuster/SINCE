@@ -14,9 +14,10 @@
   }
 
   switch ($view) {
-    case 'history': $view = new HistoryView(); break;
-    case 'summary': $view = new SummaryView(); break;
-    default:        $view = new HistoryView(); break;
+    case 'history'  : $view = new HistoryView();  break;
+    case 'settings' : $view = new SettingsView(); break;
+    case 'summary'  : $view = new SummaryView();  break;
+    default:          $view = new HistoryView();  break;
   }
 ?>
 
@@ -36,6 +37,7 @@
           <menu>
             <li><a href="/history">Transaction History</a></li>
             <li><a href="/summary">Summaries</a></li>
+            <li><a href="/settings">Settings</a></li>
           </menu>
         </nav>
       </div>

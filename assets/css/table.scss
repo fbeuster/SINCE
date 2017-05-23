@@ -2,6 +2,10 @@
 @import 'lib/_color';
 
 body {
+  h2 + table.value_list {
+    margin-top: 1.25em;
+  }
+
   table.value_list {
     border-collapse: collapse;
 
@@ -65,7 +69,7 @@ body {
           }
 
           &.actions {
-            width: 3em;
+            width: 4em;
 
             span.button {
               color: $darker_grey;
@@ -79,6 +83,16 @@ body {
               &:hover {
                 color: $green;
               }
+            }
+          }
+
+          &.color {
+            vertical-align: middle;
+
+            span.color {
+              display: block;
+              height: 1em;
+              width: 1em;
             }
           }
         }
