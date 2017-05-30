@@ -41,7 +41,8 @@
           $fields = array('name');
           $values = array('s', array($_POST['customer']));
 
-          if ($_POST['set_color']) {
+          if (isset($_POST['set_color']) &&
+              $_POST['set_color']) {
             $fields[]     = 'color';
             $values[0]    .= 's';
             $values[1][]  = $_POST['color'];
